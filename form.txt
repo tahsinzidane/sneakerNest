@@ -1,0 +1,24 @@
+  <h1>Upload New Product</h1>
+    <form action="/api/up-product/upload-new" method="post" enctype="multipart/form-data">
+        <label for="image">Product Image:</label>
+        <input type="file" name="image" id="image" required>
+        <br><br>
+
+        <label for="title">Product Title:</label>
+        <input type="text" name="title" id="title" placeholder="Product title here" required>
+        <br><br>
+
+        <label for="description">Product Description:</label>
+        <textarea name="description" id="description" placeholder="Write about the product" rows="4"></textarea>
+         <br><br>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" placeholder="Define price" min="0" required>
+        <br><br>
+
+        <label for="inStock">Inventory:</label>
+        <input type="number" name="inStock" id="inStock" placeholder="In inventory" min="0" required>
+        <br><br>
+
+        <input type="submit" value="Upload Your Product">
+    </form>

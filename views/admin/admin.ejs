@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body>
+    <div id="nav">
+        <ul>
+            <li id="menuToggle">
+                <i class="ri-menu-4-line"></i>
+            </li>
+            <li>
+                <i class="ri-home-line"></i>
+            </li>
+        </ul>
+    </div>
+
+    <div id="navLinks" class="sidebar">
+        <ul>
+            <li id="uploadBtn">Upload</li>
+            <li id="setupLP">Setup Landing Page</li>
+            <li id="allUsers">Users</li>
+            <li id="allProducts">All Products</li>
+        </ul>
+    </div>
+
+    <section class="content">
+        <!-- Upload New Product Form -->
+        <div class="area" id="uploadForm">
+            <h1>Upload New Product</h1>
+            <form action="/api/up-product/upload-new" method="post" enctype="multipart/form-data">
+                <div class="field">
+                    <label for="image">Select an Image</label>
+                    <input type="file" name="image" required>
+                </div>
+                <div class="field">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="field">
+                    <label for="description">Description</label>
+                    <input type="text" name="description">
+                </div>
+                <div class="field">
+                    <label for="price">Price</label>
+                    <input type="number" name="price" required>
+                </div>
+                <div class="field">
+                    <label for="inStock">In Inventory</label>
+                    <input type="number" name="inStock" min="1" required>
+                </div>
+                <div class="field">
+                    <input type="submit" value="Upload Product">
+                </div>
+            </form>
+        </div>
+
+        <!-- Setup Landing Page -->
+        <div class="area" id="landingPageSetup">
+            <h1>Setup Landing Page</h1>
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="field">
+                    <label for="image">Select an Image</label>
+                    <input type="file" name="image" required>
+                </div>
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+
+        <!-- Manage All Customers -->
+        <div class="area" id="userTable">
+            <h1>Manage All Customers</h1>
+            <table id="customers">
+                <tr>
+                    <th>Created At</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                </tr>
+                <tr>
+                    <td>01/01/2024</td>
+                    <td>example@example.com</td>
+                    <td>John Doe</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- all products -->
+        <div class="area" id="productCard">
+            <h1>All Uploaded Products</h1>
+            <div class="all-products">
+
+                <div class="card">
+                    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar">
+                    <div class="container-details">
+                        <h4><b>Product Name</b></h4>
+                        <p>Product Description</p>
+                        <p>$10</p>
+                        <p>5 in stock</p>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+
+                <!-- Repeat Cards -->
+            </div>
+        </div>
+
+    </section>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>
