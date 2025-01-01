@@ -1,13 +1,13 @@
 const express = require('express');
-const upload = require('../config/multer'); // Ensure multer is configured properly
+const upload = require('../config/multer');
 const Products = require('../models/Product');
 
 const router = express.Router();
 
 router.post('/upload-new', upload.single('image'), async (req, res) => {
     try {
-        console.log('Body:', req.body);
-        console.log('File:', req.file);
+        // console.log('Body:', req.body);
+        // console.log('File:', req.file);
 
         const { title, price, description, inStock } = req.body;
 
@@ -35,7 +35,7 @@ router.post('/upload-new', upload.single('image'), async (req, res) => {
             product: savedProduct
         });
     } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         res.status(500).json({ message: 'Error uploading product.' });
     }
 });

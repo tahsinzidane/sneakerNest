@@ -62,11 +62,17 @@ app.use('/users', require('./routes/users'));
 app.use('/api/up-product', require('./routes/products'));
 
 
-app.get('/admin/dashboard', (req, res) => {
-  res.render('admin/admin', {
-    user: req.user,
-    product: req.Product
-  });
+app.get('/admin/dashboard', async (req, res) => {
+  try {
+    // Fetch all users from the database
+    const users = await User.find({}, 'username email createdAt');
+    const products = await Product.find({}, 'image title price description inStock createdAt');
+    // Render the admin dashboard and pass user data to the template
+    res.render('admin/admin', { users, products });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 

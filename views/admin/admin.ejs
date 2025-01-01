@@ -17,18 +17,31 @@
             <li id="menuToggle">
                 <i class="ri-menu-4-line"></i>
             </li>
-            <li>
-                <i class="ri-home-line"></i>
-            </li>
+            <a href="/" style="color: white;">
+                <li>
+                    <i class="ri-home-line"></i>
+                </li>
+            </a>
         </ul>
     </div>
 
     <div id="navLinks" class="sidebar">
         <ul>
-            <li id="uploadBtn">Upload</li>
-            <li id="setupLP">Setup Landing Page</li>
-            <li id="allUsers">Users</li>
-            <li id="allProducts">All Products</li>
+            <li id="closs">
+                <i class="ri-arrow-left-line"></i>
+            </li>
+            <li id="uploadBtn">
+                <i class="ri-upload-2-line"></i> Upload
+            </li>
+            <li id="setupLP">
+                <i class="ri-landscape-ai-fill"></i> Setup Landing Page
+            </li>
+            <li id="allUsers">
+                <i class="ri-group-line"></i>Users
+            </li>
+            <li id="allProducts">
+                <i class="ri-product-hunt-fill"></i> All Products
+            </li>
         </ul>
     </div>
 
@@ -79,35 +92,60 @@
         <div class="area" id="userTable">
             <h1>Manage All Customers</h1>
             <table id="customers">
-                <tr>
-                    <th>Created At</th>
-                    <th>Email</th>
-                    <th>Username</th>
-                </tr>
-                <tr>
-                    <td>01/01/2024</td>
-                    <td>example@example.com</td>
-                    <td>John Doe</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Created At</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user=> { %>
+                        <tr>
+                            <td>
+                                <%= new Date(user.createdAt).toLocaleDateString() %>
+                            </td> <!-- Format date -->
+                            <td>
+                                <%= user.email %>
+                            </td>
+                            <td>
+                                <%= user.username %>
+                            </td>
+                            <td>
+                                <button>Ban</button>
+                                <button>Delete</button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
             </table>
         </div>
 
         <!-- all products -->
         <div class="area" id="productCard">
             <h1>All Uploaded Products</h1>
+           
             <div class="all-products">
-
-                <div class="card">
-                    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar">
-                    <div class="container-details">
-                        <h4><b>Product Name</b></h4>
-                        <p>Product Description</p>
-                        <p>$10</p>
-                        <p>5 in stock</p>
-                        <button>Order Now</button>
-                    </div>
-                </div>
-
+                    <% products.forEach(product=> { %>
+                        <div class="card">
+                            <img src="<%= product.image %>" alt="Product Image">
+                            <div class="container-details">
+                                <h4><b>
+                                        <%= product.title %>
+                                    </b></h4>
+                                <p>
+                                    <%= product.description %>
+                                </p>
+                                <p>$<%= product.price %>
+                                </p>
+                                <p>
+                                    <%= product.inStock %> in stock
+                                </p>
+                                <button>Delete</button>
+                            </div>
+                        </div>
+                        <% }) %>
                 <!-- Repeat Cards -->
             </div>
         </div>
