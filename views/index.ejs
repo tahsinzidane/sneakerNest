@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Home</title>
 </head>
+
 <body>
-  <h1>Welcome</h1>
+  <div class="container">
+
+    <nav>
+      <!-- nav section will written here -->
+    </nav>
+
+    <!-- hero section -->
+    <div class="hero">
+      <% if (benner.length> 0) { %>
+        <img src="<%= benner[0].landingPageBenner %>" alt="Landing Page Banner">
+        <% } else { %>
+          <p>No banner available</p>
+          <% } %>
+    </div>
+
+
+
+  </div>
   <% if (user) { %>
     <p>Hello, <%= user.username %>!</p>
     <a href="/users/dashboard">Dashboard</a> | <a href="/auth/logout">Logout</a>
-  <% } else { %>
-    <a href="/auth/login">Login</a> | <a href="/auth/register">Register</a>
-  <% } %>
+    <% } else { %>
+      <a href="/auth/login">Login</a> | <a href="/auth/register">Register</a>
+      <% } %>
 
 </body>
+
 </html>

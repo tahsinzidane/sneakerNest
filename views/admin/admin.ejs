@@ -79,10 +79,10 @@
         <!-- Setup Landing Page -->
         <div class="area" id="landingPageSetup">
             <h1>Setup Landing Page</h1>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="/api/up-landing-page/setupLandingPage" method="post" enctype="multipart/form-data">
                 <div class="field">
                     <label for="image">Select an Image</label>
-                    <input type="file" name="image" required>
+                    <input type="file" name="landingPageBenner" required>
                 </div>
                 <input type="submit" value="Upload">
             </form>
@@ -104,7 +104,7 @@
                     <% users.forEach(user=> { %>
                         <tr>
                             <td>
-                                <%= new Date(user.createdAt).toLocaleDateString() %>
+                                <%=user.createdAt %>
                             </td> <!-- Format date -->
                             <td>
                                 <%= user.email %>
@@ -125,28 +125,34 @@
         <!-- all products -->
         <div class="area" id="productCard">
             <h1>All Uploaded Products</h1>
-           
+
             <div class="all-products">
-                    <% products.forEach(product=> { %>
-                        <div class="card">
-                            <img src="<%= product.image %>" alt="Product Image">
-                            <div class="container-details">
-                                <h4><b>
-                                        <%= product.title %>
-                                    </b></h4>
-                                <p>
-                                    <%= product.description %>
-                                </p>
-                                <p>$<%= product.price %>
-                                </p>
-                                <p>
-                                    <%= product.inStock %> in stock
-                                </p>
-                                <button>Delete</button>
-                            </div>
+                <% products.forEach(product=> { %>
+                    <div class="card">
+                        <img src="/<%= product.image %>" alt="<%= product.title %>">
+                        <!-- <%= console.log(product.image) %> -->
+                        <div class="container-details">
+                            <h4><b>
+                                    <%= product.title %>
+                                </b></h4>
+                            <p>
+                                <%= product.description %>
+                            </p>
+                            <p>$<%= product.price %>
+                            </p>
+                            <p>
+                                <%= product.inStock %> in stock
+                            </p>
+                            <form action="/api/up-product/delete/<%= product._id %>" method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this product?')">
+                                <button type="submit">Delete</button>
+                            </form>
+
+
                         </div>
-                        <% }) %>
-                <!-- Repeat Cards -->
+                    </div>
+                    <% }) %>
+                        <!-- Repeat Cards -->
             </div>
         </div>
 

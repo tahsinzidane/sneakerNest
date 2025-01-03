@@ -5,26 +5,36 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const LocalStrategy = require('passport-local').Strategy;
-const path = require('path')
+const path = require('path');
+const helmet = require('helmet');
+const compression = require('compression');
 
 const User = require('./models/User');
-const Product = require('./models/Product')
+const Product = require('./models/Product');
+const Benner = require('./models/setupLandingPage');
 const app = express();
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+  .catch(err => console.error('Database connection error:', err));
 
 // Middleware
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: false }));
+app.use(helmet());
+app.use(compression());
 app.use(session({
-  secret: 'your_secret_key',
+  secret: process.env.SESSION_SECRET || 'your_secret_key',
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  },
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -60,21 +70,39 @@ app.use('/', require('./routes/home'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/api/up-product', require('./routes/products'));
+app.use('/api/landingPageSetup', require('./routes/setupLandingPage'));
 
-
-app.get('/admin/dashboard', async (req, res) => {
+// Index Page
+app.get('/', async (req, res) => {
   try {
-    // Fetch all users from the database
-    const users = await User.find({}, 'username email createdAt');
     const products = await Product.find({}, 'image title price description inStock createdAt');
-    // Render the admin dashboard and pass user data to the template
-    res.render('admin/admin', { users, products });
-  } catch (error) {
-    console.error(error);
+    const benner = await Benner.find({}, 'landingPageBenner') || []; // Default to an empty array if no results
+    res.render('index', { products, benner });
+  } catch (err) {
+    console.error('Index Page Error:', err);
     res.status(500).send('Internal Server Error');
   }
 });
 
+
+// Admin Dashboard
+app.get('/admin/dashboard', async (req, res) => {
+  try {
+    // Fetch users and products
+    const users = await User.find({}, 'username email createdAt');
+    const products = await Product.find({}, 'image title price description inStock createdAt');
+    res.render('admin/admin', { users, products });
+  } catch (error) {
+    console.error('Admin Dashboard Error:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 // Server
 const PORT = process.env.PORT || 3000;
