@@ -2,7 +2,11 @@
 <html>
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -12,25 +16,35 @@
       <!-- nav section will written here -->
     </nav>
 
-    <!-- hero section -->
     <div class="hero">
-      <% if (benner.length> 0) { %>
-        <img src="<%= benner[0].landingPageBenner %>" alt="Landing Page Banner">
-        <% } else { %>
-          <p>No banner available</p>
-          <% } %>
+      <div class="slider">
+        <% if (benner.length> 0) { %>
+          <% benner.forEach((banner, index)=> { %>
+            <img class="slide <%= index === 0 ? 'active' : '' %>" src="/<%= banner.landingPageBanner %>"
+              alt="hero banner">
+            <% }); %>
+              <!-- Manual Controls -->
+              <button class="slider-control prev">
+                <i class="ri-arrow-left-s-fill"></i>
+              </button>
+              <button class="slider-control next">
+                <i class="ri-arrow-right-s-fill"></i>
+              </button>
+              <% } else { %>
+                <p>No banner available</p>
+                <% } %>
+      </div>
     </div>
-
-
 
   </div>
   <% if (user) { %>
     <p>Hello, <%= user.username %>!</p>
-    <a href="/users/dashboard">Dashboard</a> | <a href="/auth/logout">Logout</a>
+    <a href="/users/profile">Dashboard</a> | <a href="/auth/logout">Logout</a>
     <% } else { %>
       <a href="/auth/login">Login</a> | <a href="/auth/register">Register</a>
       <% } %>
 
+        <script src="/js/index.js"></script>
 </body>
 
 </html>

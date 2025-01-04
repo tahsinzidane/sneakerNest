@@ -9,9 +9,13 @@ const path = require('path');
 const helmet = require('helmet');
 const compression = require('compression');
 
+
+// models
 const User = require('./models/User');
 const Product = require('./models/Product');
-const Benner = require('./models/setupLandingPage');
+const LandingPage = require('./models/setupLandingPage');
+
+// Express App
 const app = express();
 
 // Database Connection
@@ -72,26 +76,14 @@ app.use('/users', require('./routes/users'));
 app.use('/api/up-product', require('./routes/products'));
 app.use('/api/landingPageSetup', require('./routes/setupLandingPage'));
 
-// Index Page
-app.get('/', async (req, res) => {
-  try {
-    const products = await Product.find({}, 'image title price description inStock createdAt');
-    const benner = await Benner.find({}, 'landingPageBenner') || []; // Default to an empty array if no results
-    res.render('index', { products, benner });
-  } catch (err) {
-    console.error('Index Page Error:', err);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-
 // Admin Dashboard
 app.get('/admin/dashboard', async (req, res) => {
   try {
     // Fetch users and products
     const users = await User.find({}, 'username email createdAt');
     const products = await Product.find({}, 'image title price description inStock createdAt');
-    res.render('admin/admin', { users, products });
+    const benner = await LandingPage.find({}, 'landingPageBanner');
+    res.render('admin/admin', { users, products, benner });
   } catch (error) {
     console.error('Admin Dashboard Error:', error);
     res.status(500).send('Internal Server Error');

@@ -22,3 +22,14 @@
 
         <input type="submit" value="Upload Your Product">
     </form>
+
+
+
+
+    //some ejs code here
+      <!-- <% if (user) { %>
+    <p>Hello, <%= user.username %>!</p>
+    <a href="/users/dashboard">Dashboard</a> | <a href="/auth/logout">Logout</a>
+    <% } else { %>
+      <a href="/auth/login">Login</a> | <a href="/auth/register">Register</a>
+      <% } %> -->
