@@ -1,0 +1,153 @@
+/* Container for all products */
+.all-products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+/* Individual product card style */
+.product-card {
+    width: 100%;
+    max-width: 300px;
+    /* Keeps the cards consistent in size */
+    margin: 0 auto;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    /* transform: translateY(-5px); */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card image */
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Product details container */
+.container-details {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    color: #555;
+    font-size: 0.95em;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.stock-status {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Tags style */
+.tags ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.tags li {
+    display: inline-block;
+    background-color: #f1f1f1;
+    color: #007bff;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+
+.tags li:hover {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Button styles */
+.product-actions form {
+    margin-bottom: 10px;
+}
+
+.product-actions button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* .product-actions button i:hover {} */
+
+/* Primary and secondary buttons */
+.btn-primary {
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: 1px solid #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 768px) {
+    .all-products {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-card {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .product-card {
+        width: 30%;
+    }
+}
+
+@media (max-width: 576px) {
+    .product-card {
+        width: 100%;
+    }
+}
+
+/* classlist come from js */
+.advance-icon:hover {
+    position: relative;
+    left: 8px;
+}

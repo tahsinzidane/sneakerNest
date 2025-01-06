@@ -63,6 +63,10 @@
                     <input type="text" name="description">
                 </div>
                 <div class="field">
+                    <label for="tag">product tag</label>
+                    <input type="text" name="tags" placeholder="#hoodie #shoes" required>
+                </div>
+                <div class="field">
                     <label for="price">Price</label>
                     <input type="number" name="price" required>
                 </div>
@@ -159,6 +163,16 @@
                             </p>
                             <p>
                                 <%= product.inStock %> in stock
+                            </p>
+                            <p>
+                            <ul>
+                                <ul>
+                                    <% product.tags.forEach(tag=> { %>
+                                        <li><%= tag %>
+                                        </li>
+                                        <% }) %>
+                                </ul>
+                            </ul>
                             </p>
                             <form action="/api/up-product/delete/<%= product._id %>" method="POST"
                                 onsubmit="return confirm('Are you sure you want to delete this product?')">

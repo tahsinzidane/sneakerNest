@@ -9,16 +9,24 @@ const router = express.Router();
 // upload product router
 router.post('/upload-new', upload.single('image'), async (req, res) => {
     try {
-        const { title, price, description, inStock } = req.body;
+        const { title, price, description, inStock, tags } = req.body;
 
         // Validate required fields
-        if (!title || !price || !inStock || !req.file) {
+        if (!title || !price || !inStock || !tags || !req.file) {
             return res.status(400).json({ message: 'All fields are required, including the image.' });
         }
+
+
+        // Format tags with # prefix
+        const formattedTags = tags
+            .split(' ') // Split by spaces
+            .map(tag => (tag.startsWith('#') ? tag : `#${tag.trim()}`)) // Ensure each tag starts with #
+            .join(' ');
 
         // Normalize the file path
         const imagePath = `uploads/${req.file.filename}`;
 
+        const ProductTags = req.body.tags.split(',').map(tag => tag.trim());
         // Create a new product
         const product = new Products({
             image: imagePath,
@@ -26,6 +34,7 @@ router.post('/upload-new', upload.single('image'), async (req, res) => {
             price,
             description,
             inStock,
+            tags: ProductTags
         });
 
         // Save product to database

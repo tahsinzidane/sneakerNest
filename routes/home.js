@@ -11,7 +11,8 @@ function isAuthenticated(req, res, next) {
 router.get('/', isAuthenticated, async (req, res) => {
   try {
     const benner = await Benner.find({}, 'landingPageBanner');
-    const products = await Product.find({}, 'image title price description inStock createdAt');
+    const products = await Product.find({}, 'image title price description inStock createdAt tags')
+      .sort({ createdAt: -1 });
     res.render('index', {
       user: req.user,
       benner,

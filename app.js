@@ -75,13 +75,13 @@ app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/api/up-product', require('./routes/products'));
 app.use('/api/landingPageSetup', require('./routes/setupLandingPage'));
-
+app.use(require('./routes/searchProduct'));
 // Admin Dashboard
 app.get('/admin/dashboard', async (req, res) => {
   try {
     // Fetch users and products
     const users = await User.find({}, 'username email createdAt');
-    const products = await Product.find({}, 'image title price description inStock createdAt');
+    const products = await Product.find({}, 'image title price description inStock createdAt tags');
     const benner = await LandingPage.find({}, 'landingPageBanner');
     res.render('admin/admin', { users, products, benner });
   } catch (error) {

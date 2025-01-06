@@ -1,3 +1,4 @@
+// front end javascript for hero section slider
 const slides = document.querySelectorAll('.slide');
 const nextButton = document.querySelector('.slider-control.next');
 const prevButton = document.querySelector('.slider-control.prev');
@@ -34,3 +35,21 @@ if (slides.length > 0) {
     showSlide(currentSlide);
     startAutoSlider();
 }
+
+
+
+// some card style
+const btnBlocks = document.querySelectorAll('.btn-block');
+const icons = document.querySelectorAll('#icon');
+
+btnBlocks.forEach((btnBlock, index) => {
+    const icon = icons[index]; // Get the corresponding icon for each button
+
+    btnBlock.addEventListener('mouseover', () => {
+        icon.classList.add('advance-icon');
+    });
+
+    btnBlock.addEventListener('mouseout', () => {
+        icon.classList.remove('advance-icon');
+    });
+});
