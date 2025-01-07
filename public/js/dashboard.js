@@ -36,15 +36,17 @@ const uploadBtn = document.getElementById('uploadBtn');
 const setupLP = document.getElementById('setupLP');
 const allUsers = document.getElementById('allUsers');
 const allProducts = document.getElementById('allProducts');
+const orders = document.getElementById('orders');
 
 // All sections
 const uploadForm = document.getElementById('uploadForm');
 const landingPageSetup = document.getElementById('landingPageSetup');
 const userTable = document.getElementById('userTable');
 const productCard = document.getElementById('productCard');
+const allOrders = document.getElementById('allOrders');
 
 // Array of all sections
-const areas = [uploadForm, landingPageSetup, userTable, productCard];
+const areas = [uploadForm, landingPageSetup, userTable, productCard, allOrders];
 
 // Hide all sections by default
 areas.forEach(area => {
@@ -82,6 +84,12 @@ const dynamicSidebar = () => {
     allProducts.addEventListener('click', () => {
         hideAllAreas();
         productCard.style.display = 'block';
+    });
+
+    // Show the orders and hide others
+    orders.addEventListener('click', () => {
+        hideAllAreas();
+        allOrders.style.display = 'block';
     });
 };
 

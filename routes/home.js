@@ -8,7 +8,7 @@ function isAuthenticated(req, res, next) {
   res.redirect('/auth/login');
 }
 
-router.get('/', isAuthenticated, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const benner = await Benner.find({}, 'landingPageBanner');
     const products = await Product.find({}, 'image title price description inStock createdAt tags')
