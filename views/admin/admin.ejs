@@ -201,15 +201,58 @@
         <!-- all orders -->
         <div class="area" id="allOrders">
             <h1>All orders</h1>
-            <div class="container border">
-                <div class="row">
-                    <div class="col-xxl-6">
-                        <!-- TODO: tomorow -->
-                        <img src="" alt="" srcset="">
+            <div class="container mt-5">
+                <% orders.forEach(order=> { %>
+                    <div class="row border mb-4 p-3">
+                        <!-- Product Image -->
+                        <div class="col-xxl-6">
+                            <img src="/<%= order.productImg %>" alt="<%= order.productTitle %>" class="img-fluid">
+                        </div>
+
+                        <!-- Order Information -->
+                        <div class="col-xxl-6">
+                            <h1>Order Details</h1>
+                            <p>
+                                <strong>Customer Name:</strong>
+                                <%= order.userName %>
+                            </p>
+                            <p>
+                                <strong>Email:</strong>
+                                <%= order.userEmail %>
+                            </p>
+                            <p>
+                                <strong>Mobile Number:</strong>
+                                <%= order.mobileNumber %>
+                            </p>
+                            <p>
+                                <strong>Product:</strong>
+                                <%= order.productTitle %>
+                            </p>
+                            <p>
+                                <strong>Price:</strong>
+                                $<%= order.productPrice %>
+                            </p>
+                            <p>
+                                <strong>Delivery Location:</strong>
+                                <%= order.deliveryLocation %>
+                            </p>
+                            <p>
+                                <strong>Payment Method:</strong>
+                                <%= order.paymentMethod %>
+                            </p>
+                            <p>
+                                <strong>Status:</strong>
+                                <%= order.status %>
+                            </p>
+                            <p>
+                                <strong>Ordered On:</strong>
+                                <%= order.createdAt.toDateString() %>
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-xxl-6"></div>
-                </div>
+                    <% }); %>
             </div>
+
 
 
         </div>

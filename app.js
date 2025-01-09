@@ -1,3 +1,7 @@
+// Description: Main entry point for the application.
+// It contains the server configuration and routes.
+
+// Required Libraries and Dependencies
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
@@ -60,10 +64,16 @@ app.use(require('./routes/order'));
 // Admin Dashboard
 app.get('/admin/dashboard', async (req, res) => {
   try {
+    // fetch all data
     const users = await User.find({}, 'username email createdAt');
     const products = await Product.find({}, 'image title price description inStock createdAt tags');
     const benner = await LandingPage.find({}, 'landingPageBanner');
-    const orders = await Orders.find({}, 'product productImg user userName userEmail deliveryLocation paymentMethod status mobileNumber productPrice productTitle createdAt');
+    const orders = await Orders.find({}, 'product userName userEmail productImg productTitle productPrice deliveryLocation paymentMethod status createdAt mobileNumber')
+    // take new orders first
+      .populate('product')
+      .populate('user')
+      .sort({ createdAt: -1 });
+    // send it to the admin dashboard
     res.render('admin/admin', { users, products, benner, orders });
   } catch (error) {
     console.error('Admin Dashboard Error:', error);
