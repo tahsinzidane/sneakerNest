@@ -15,17 +15,19 @@ const ProductSchema = new mongoose.Schema({
         default: 1
     },
     description: {
-        type: String
+        type: String,
+        required: true
     },
     inStock: {
         type: Number,
         required: true,
         default: 1
     },
-    tags:{
+    tags: {
         type: [String],
         required: true
     }
-}, { timestamps: true })
+}, { timestamps: true });
 
-module.exports = mongoose.model('Product', ProductSchema);
+// Prevent Overwriting
+module.exports = mongoose.models.Product || mongoose.model('Product', ProductSchema);

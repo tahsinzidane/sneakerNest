@@ -12,6 +12,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
 const helmet = require('helmet');
 const compression = require('compression');
+const MongoStore = require('connect-mongo');
+require('dotenv').config()
 
 
 // models
@@ -19,9 +21,13 @@ const User = require('./models/User');
 const Product = require('./models/Product');
 const LandingPage = require('./models/setupLandingPage');
 const Orders = require('./models/order');
+const Cart = require('./models/cart');
 
 // Express App
 const app = express();
+
+// db uri 
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/sneakernest'
 
 // Middleware
 app.set('view engine', 'ejs');
@@ -34,12 +40,19 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'your_secret_key',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: mongoUri, 
+    collectionName: 'sessions'
+  }),
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
   },
 }));
+
+
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -59,6 +72,7 @@ app.use('/api/up-product', require('./routes/products'));
 app.use('/api/landingPageSetup', require('./routes/setupLandingPage'));
 app.use(require('./routes/searchProduct'));
 app.use(require('./routes/order'));
+app.use('/cart', require('./routes/tocart'));
 
 
 // Admin Dashboard
@@ -69,7 +83,7 @@ app.get('/admin/dashboard', async (req, res) => {
     const products = await Product.find({}, 'image title price description inStock createdAt tags');
     const benner = await LandingPage.find({}, 'landingPageBanner');
     const orders = await Orders.find({}, 'product userName userEmail productImg productTitle productPrice deliveryLocation paymentMethod status createdAt mobileNumber')
-    // take new orders first
+      // take new orders first
       .populate('product')
       .populate('user')
       .sort({ createdAt: -1 });

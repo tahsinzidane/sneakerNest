@@ -59,7 +59,7 @@
 
 
   <!-- hero -->
-  
+
   <div class="hero">
     <div class="slider position-relative">
       <% if (benner.length> 0) { %>
@@ -67,7 +67,7 @@
           <img class=" slide <%= index === 0 ? 'active' : '' %>" src="/<%= banner.landingPageBanner %>"
             alt="Hero Banner">
           <% }); %>
-             <!-- Manual Controls  -->
+            <!-- Manual Controls  -->
             <button class="slider-control prev">
               <i class="ri-arrow-left-s-fill"></i>
             </button>
@@ -78,7 +78,7 @@
               <p class="text-center">No banner available</p>
               <% } %>
     </div>
-  </div> 
+  </div>
 
   <!-- menu section -->
   <div class="container text-center border mt-3 rounded">
@@ -129,21 +129,25 @@
                 </div>
 
                 <div class="product-actions mt-3">
+                  <!-- View Product Button -->
                   <form action="/product/<%= product._id %>" method="GET">
                     <button type="submit" class="btn btn-primary btn-block">
                       View <i class="ri-arrow-right-line" id="icon"></i>
                     </button>
                   </form>
-                  <form action="#" method="POST">
-                    <button type="submit" class="btn btn-success btn-block">
-                      Add to Cart
-                    </button>
+
+                  <form action="/cart/add-to-cart" method="POST">
+                    <input type="hidden" name="productId" value="<%= product._id %>">
+                    <button type="submit" class="btn btn-success btn-block">Add to Cart</button>
                   </form>
+
+
                 </div>
               </div>
             </div>
           </div>
           <% }) %>
+
       </div>
     </div>
   </div>
